@@ -1,6 +1,6 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
-import { VaultAnchor } from "../target/types/vault_anchor";
+import { AnchorVaultDemo } from "../target/types/anchor_vault_demo";
 import { expect } from 'chai';
 
 describe("vault-anchor", () => {
@@ -8,7 +8,7 @@ describe("vault-anchor", () => {
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
 
-  const program = anchor.workspace.VaultAnchor as Program<VaultAnchor>;
+  const program = anchor.workspace.AnchorVaultDemo as Program<AnchorVaultDemo>;
 
   const vaultState = anchor.web3.PublicKey.findProgramAddressSync(
     [Buffer.from("state"), provider.publicKey.toBytes()],
@@ -23,7 +23,7 @@ describe("vault-anchor", () => {
 
   it("should be initialize-able", async () => {
     const tx = await program.methods
-      .initialize()
+      .init()
       .accountsPartial({
         user: provider.wallet.publicKey,
         vaultState,
